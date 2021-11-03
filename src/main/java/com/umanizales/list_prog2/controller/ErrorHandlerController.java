@@ -13,9 +13,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * es un controlador para posibles errores y que estos sean capturados y cuando lo capture muestre uun mensaje
+ */
 @ControllerAdvice
 public class ErrorHandlerController {
-        @ExceptionHandler(ListaSeException.class)
+    /**
+     * este metodo funciona como un capturador de erroreres que responde con un mensaje
+     * @param ex el parametro  es viee de la lista de excepciones y toma su respectivo valor cuando es llamado
+     * @return  un mensaje cuando es llamado
+     */
+    @ExceptionHandler(ListaSeException.class)
         protected ResponseEntity<?> handle(ListaSeException ex){
                 List<ErrorDTO> listErrors =  new ArrayList<>();
 
@@ -23,6 +31,12 @@ public class ErrorHandlerController {
                 ResponseDTO response = new ResponseDTO(message,null, null);
                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
+
+    /**
+     * metodo para validar los datos de un boy y que este tambien responde cuando no se cumplen con las validaciones
+     * @param ex el parametro ex viene de la lista de excepciones y toma su respectivo valor cuando es llamad
+     * @return un mensaje cuando es llamado
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<?> handle(MethodArgumentNotValidException ex){
         List<ErrorDTO> listErrors = new ArrayList<>();

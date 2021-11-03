@@ -5,6 +5,10 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * Clase creada para devolver un mensaje tras un posible error que presente al estar ingresando en la plataforma postman
+ *
+ */
 @Data
 @AllArgsConstructor
 public class ResponseDTO {

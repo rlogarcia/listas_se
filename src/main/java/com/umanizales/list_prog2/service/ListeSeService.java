@@ -132,4 +132,15 @@ public class ListeSeService {
         }
         return new ResponseEntity<>(new ResponseDTO("satisfactorio", listBoys.listForAgeAndMu(age,municipio), null), HttpStatus.OK);
     }
+   /* public ResponseEntity<ResponseDTO> getBoysByGender()
+    {
+        List<BoysByGender> boysByGenders = new ArrayList<>();
+        for(Gender1 gender:genders)
+        {
+            int count = listBoys.getCountBoysByGender(gender.getCode());
+            boysByGenders.add(new BoysByGender(gender,count));
+        }
+        return new ResponseEntity<>(new ResponseDTO("Satisfactorio",boysByGenders,null), HttpStatus.OK);
+    }*/
+
 }
