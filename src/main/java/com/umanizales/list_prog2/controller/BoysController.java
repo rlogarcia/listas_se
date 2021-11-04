@@ -226,8 +226,28 @@ public class BoysController {
      *      *      *      * y le esta haciendo pasarela para que el no sea el que grite la excepcion
      */
     @GetMapping(path = "/listforageandmu/{age}/{municipio}")
-    public ResponseEntity<ResponseDTO> listForAgeAndMu(int age, String municipio) throws ListaSeException {
+    public ResponseEntity<ResponseDTO> listForAgeAndMu(@PathVariable int age, @PathVariable String municipio) throws ListaSeException {
         return listeSeService.listForAgeAndMu(age, municipio);
+    }
+    @GetMapping(path = "/listforageandgender/{age}/{gender}")
+    public ResponseEntity<ResponseDTO> listForAgeAndGender(@PathVariable int age, @PathVariable String gender) throws ListaSeException
+    { return listeSeService.listForAgeAndGender(age,gender);
+    }
+    @GetMapping(path = "/deleteboyforage/{age}")
+    public ResponseEntity<ResponseDTO> deleteBoyForAge(@PathVariable byte age) throws ListaSeException {
+        return listeSeService.deleteBoyForAge(age);
+    }
+    @GetMapping(path = "/deleteboyforgender/{gender}")
+    public ResponseEntity<ResponseDTO> deleteBoyForGender(@PathVariable String gender) throws ListaSeException {
+        return listeSeService.deleteBoyForGender(gender);
+    }
+    @GetMapping(path = "/deletetopositon/{pos}")
+    public ResponseEntity<ResponseDTO> deleteBoyToPosition(@PathVariable int pos) throws ListaSeException {
+        return listeSeService.deleteBoyByPos(pos);
+    }
+    @GetMapping(path = "/listforgrade/{grade}")
+    public ResponseEntity<ResponseDTO> listForGrade(@PathVariable byte grade) throws ListaSeException {
+        return listeSeService.listForGrade(grade);
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
@@ -306,5 +326,30 @@ public class BoysController {
     @PostMapping(path = "/addtopositonde/{pos}")
     public ResponseEntity<ResponseDTO> addBoyToPositionDe(@PathVariable int pos, @RequestBody Boy boy) throws ListaSeException {
         return listDeServiceDe.addBoyByPosDe(boy, pos);
+    }
+    /**
+     * metodo para invertir la lista en el getmpaping se slicita la palabra invertir y automaticamente el invierte la lista llamando
+     * el metodo de invertir lista
+     * @return se retorna la lista ya invertidad
+     * @throws ListaSeException esta es la excepcion que puede lanzar
+     * y le esta haciendo pasarela para que el no sea el que grite la excepcion
+     */
+    @GetMapping(path = "/invertde")
+    public ResponseEntity<ResponseDTO> invertListDe() throws ListaSeException {
+        return listDeServiceDe.invertListDe();
+    }
+    @GetMapping(path = "/boysbylocationde")
+    public ResponseEntity<ResponseDTO> boysbylocationDe() {
+        return listDeServiceDe.getBoyByLocationDe();
+    }
+    /**
+     * metodo que me permite intercalar en un listado ya sea niños o niñas seugun el mayor numero de los mismos
+     * @return este retorna la nueva lista donde se encuentra intercalados los niños por genero
+     * @throws ListaSeException esta es la excepcion que puede lanzar
+     *      *      *      * y le esta haciendo pasarela para que el no sea el que grite la excepcion
+     */
+    @GetMapping(path = "/variantde")
+    public ResponseEntity<ResponseDTO> variantListDe() throws ListaSeException {
+        return listDeServiceDe.variantListDe();
     }
 }

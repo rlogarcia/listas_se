@@ -12,7 +12,7 @@ public class Node {
     private Node next;
 
     /**
-     * se tiene un constructor con todos los datos y es de tipo data
+     * se tiene un constructor con todos los datos y es de tipo datas
      * @param data
      */
     public Node(Boy data) {

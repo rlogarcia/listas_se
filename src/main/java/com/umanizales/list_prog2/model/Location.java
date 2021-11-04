@@ -8,6 +8,9 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
+/**
+ * en la clase locacion  tiene como principales caracteristicas la division por codigo y por descripcion del mismo
+ */
 public class Location {
     @NotNull
     @NotEmpty

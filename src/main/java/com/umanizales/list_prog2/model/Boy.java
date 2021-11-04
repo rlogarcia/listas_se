@@ -11,6 +11,10 @@ import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
+/**
+ * la clase boy nos mestra los atributos que tienen el niño
+ * y las validaciones que se hace { que no puede ser vacio, positivo, etc}
+ */
 public class Boy {
     @NotNull
     @NotEmpty
@@ -27,4 +31,10 @@ public class Boy {
     @Valid
     @NotNull
     private Location location;
+    @NotNull
+    @Positive
+    //@Size(min=1,max=5)
+    private byte grade;
+
+
 }

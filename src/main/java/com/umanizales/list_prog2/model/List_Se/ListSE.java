@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 /**
         * Clase que me permite gestionar una lista simplemente enlazada
-        * contiene los métodos u operaciones ....
+        * contiene los métodos u operaciones ....s
         * solo cuenta con los atributo head = que representa el primer niño
         * ...
         */
@@ -71,28 +71,37 @@ public class ListSE {
      * metodo que me adicciona a un niño al principio de la lista
      * @param boy el parametro es un niño con su respectiva data
      */
-    public void addToStart(Boy boy) {
-        /**
-         * se pregunta si la cabeza esta vacia
-         * se ingresa al niño so esta vacio
-         */
-        if (this.head == null) {
+    public void addToStart(Boy boy) throws ListaSeException {
+        // se crea un dato para buscar la identificacion del niño
+        Boy boyExist = findById(boy.getIdentification());
+        // se pregunta si la identificacion es diferente de vacio
+        if(boyExist != null)
+        {
+            // si ingresa hasta aqui es porque la identificacion es igual a otra que ya hay en la lista
+            throw new ListaSeException("La identificacion ya existe");
+        }
+        // se pregunta si la cabeza esta vacia
+        if(this.head==null)
+        {
+            // si ingresa aqui es porque es el primer dato
+            // se agrega el nuevo niño en la cabeza
             this.head = new Node(boy);
-
-        } else {
+        }
+        else
+        {
             /**
-             * aqui se crea el costal para el niño
-             * le decimos al niño nuevo que agarre la cabeza
-             * y estalecemos como cabeza al niño nuevo
+             * se crea  un ayudante que se pare en la cabeza
+             * se le dice al brazo next del ayudante que agarre la cabeza
+             * y le decimo al brazo del previus ayudante que agarre al vacio
              */
             Node temp = new Node(boy);
             temp.setNext(this.head);
+            //temp.setPrevius(null);
             this.head = temp;
         }
         // se aumenta el contador
         count++;
     }
-
     /**
      * metodo que me lista los niños que hay agregados en el metodo
      * @return se retona una lista de niños
@@ -344,9 +353,9 @@ public class ListSE {
                  * se agrega a la lista
                  */
                 if (temp.getData().getTypeSex().equals(typeSex)) {
-                    boy = new Boy(temp.getData().getIdentification(), temp.getData().getName(), temp.getData().getAge(), temp.getData().getTypeSex(),temp.getData().getLocation());
+                    //boy = new Boy(temp.getData().getIdentification(), temp.getData().getName(), temp.getData().getAge(), temp.getData().getTypeSex(),temp.getData().getLocation());
                     //deleteBoy(temp.getData().getIdentification());
-                    addToStart(boy);
+                    //addToStart(boy);
                 }
                 // se da paso al siguiente dato
                 temp = temp.getNext();
@@ -644,22 +653,53 @@ public class ListSE {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public List<Boy> listForAgeAndMu(int age, String municipio) throws ListaSeException{
+    /**
+     *
+     * @param age
+     * @param municipio
+     * @throws ListaSeException
+     */
+    public void listForAgeAndMu(int age, String municipio) throws ListaSeException{
+        // List<Boy>
         valdateListeEmpty();
-        Node temp = this.head;
-        List<Boy> listAge = new ArrayList<>();
-        while (temp!=null){
-            if(temp.getData().getAge()==age && temp.getData().getLocation().equals(municipio)){
-                listAge.add(temp.getData());
+        if(this.head!= null){
+            ListSE listAge= new ListSE();
+            Node temp = this.head;
+            //List<Boy> listAge =
 
-
+            while (temp!=null){
+                if(temp.getData().getAge()<=age && temp.getData().getLocation().getDescription().equals(municipio)){
+                    listAge.addToStart(temp.getData());
+                }
+                temp=temp.getNext();
             }
-            temp=temp.getNext();
+            this.head=listAge.getHead();
         }
-
-    return listAge;
+        //this.head=listAge.g
+        //return listAge;
     }
 
+    public void listForAgeAndGenderd(int age, String gender) throws ListaSeException{
+        // List<Boy>
+        valdateListeEmpty();
+        if(this.head!= null){
+            ListSE listAgeandG= new ListSE();
+            Node temp = this.head;
+            //List<Boy> listAge =
+
+            while (temp!=null){
+                if(temp.getData().getAge()<=age && temp.getData().getTypeSex().equals(gender)){
+                    //addToStart(temp.getData());
+                    listAgeandG.addToStart(temp.getData());
+                }
+                temp=temp.getNext();
+            }
+            this.head=listAgeandG.getHead();
+
+            //this.head=listAge.getHead();
+        }
+        //return listAge;
+    }
     public int getCountBoysByGender(String sex)
     {
         Node temp = this.getHead();
@@ -674,27 +714,45 @@ public class ListSE {
         }
         return count;
     }
-    public void listForGenederAndAge(int age, String gender) throws ListaSeException{
+    public void listForAgeAndGender (int age, String gender) throws ListaSeException
+    {
         valdateListeEmpty();
-        Node temp = this.head;
-        // List<Boy> listAgeAndGender = new ArrayList<>();
-             while (temp!=null){
-            if(temp.getData().getAge()<=age && temp.getData().getTypeSex().equals(gender)){
-               // listAgeAndGender.add(temp.getData());
-                addToStart(temp.getData());
-
-            }else{
-                add(temp.getData());
+        if (this.head != null) {
+            ListSE listTemp = new ListSE();
+            Node temp = this.head;
+            while(temp != null)
+            {
+               /* if(temp.getData().getAge()!=age){
+                throw new ListaSeException("No es posible hacer la busqueda pruebe otros datos");
+            }*/
+                if(temp.getData().getAge()<=age && temp.getData().getTypeSex().equals(gender)){
+                    listTemp.addToStart(temp.getData());
+                }
+                else {
+                    listTemp.add(temp.getData());
+                }
+                temp = temp.getNext();
             }
-            temp=temp.getNext();
+            this.head = listTemp.getHead();
         }
-        //return listAgeAndGender;
     }
-    public void deleteForAge(int age) throws ListaSeException{
+    public void deleteForAge(byte age) throws ListaSeException{
         valdateListeEmpty();
         Node temp = this.head;
         while(temp!=null){
-            if(temp.getData().getAge()>=age){
+            if(temp.getData().getAge()>age){
+                deleteBoy(temp.getData().getIdentification());
+            }
+            temp=temp.getNext();
+
+        }
+
+    }
+    public void deleteForGender(String gender) throws ListaSeException{
+        valdateListeEmpty();
+        Node temp = this.head;
+        while(temp!=null){
+            if(temp.getData().getTypeSex().equals(gender)){
                 deleteBoy(temp.getData().getIdentification());
             }
             temp=temp.getNext();
@@ -727,6 +785,69 @@ public class ListSE {
         return listForHigher;
 
     }
+    public void deleteToPosition(int pos) throws ListaSeException {
+
+        /**
+         * se pregunta si la validacion es mayor a la cantidad de niño
+         * si ingresa a este es porque la posicion es valida
+         * y se procede a agregar el niño
+         */
+        if (pos > count) {
+            //this.add(boy);
+            //return;
+            throw new ListaSeException("LA posicion ingresada no es valida");
+        }
+        /**
+         * se pregunta a la que quieren ingresar al niño es la primer
+         * y se llama el metodo que lo agrega al principio
+         */
+        if (pos == 1) {
+            this.head = head.getNext();
+        } else {
+            /**
+             *se crea un contador que inicializa en 1
+             * se crea un ayudante que se pare en la cabeza y nos ayude a recorrer todo el listado
+             * se empieza a recorrer todo el ciclo hasta llegar al ultimo
+             */
+            int cont = 1;
+            Node temp = this.head;
+            while (temp != null) {
+                // se pregunta si el contador es igual a la posicion menos 1
+                if (cont == pos - 1) {
+                    // se hace un alto
+                    deleteBoy(temp.getData().getIdentification());
+                    break;
+                }
+                //se le da paso al siguiente nodo
+                temp = temp.getNext();
+                // se aumenta el contador
+                cont--;
+            }
+            /**
+             * se crea un nuevo nodo para agregar al niño
+             * se le dice al brazo que agarre al anteror del ultimo
+             * se le dice al brazo del ultimo que agarre al nuevo
+             */
+            //deleteBoy(temp.getData().getIdentification());
+        }
+
+    }
+    public void listForGrade(byte grade) throws ListaSeException{
+        valdateListeEmpty();
+        if (this.head != null) {
+            ListSE listTemp = new ListSE();
+            Node temp = this.head;
+            while(temp != null)
+            {
+                if (temp.getData().getGrade()==grade){
+                    listTemp.addToStart(temp.getData());
+                }
+                temp = temp.getNext();
+            }
+            this.head = listTemp.getHead();
+        }
+    }
+
 
 }
 
