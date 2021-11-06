@@ -285,33 +285,94 @@ public class ListeSeService {
         }
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio",boysByGenders,null), HttpStatus.OK);
     }*/
+
+    /**
+     *calse de respuesta que me devuelve una exepcion ó
+     * me devuelve una respuesta acertiva con el sistema y me lista los niños y llama el metodo lista los niños poredad y genero
+     * @return una respuesta
+     * @throws ListaSeException
+     */
    public ResponseEntity<ResponseDTO> listForAgeAndGender(int age, String gender) throws ListaSeException
    {
+       // se llama al metodo de listar por edad y genero
        listBoys.listForAgeAndGender(age,gender);
+       // se tuvo respuesta del sistema
        return new ResponseEntity<>(new ResponseDTO("Satisfactorio",listBoys.getHead(), null), HttpStatus.OK);
    }
 
-    public ResponseEntity<ResponseDTO> deleteBoyForAge(byte age) throws ListaSeException {
+    /**
+     *calse de respuesta que me devuelve una exepcion ó
+     * me devuelve una respuesta acertiva con el sistema y me elimina los niños y llama el metodo eliminar  los niños poreda
+     * @return una respuesta
+     * @throws ListaSeException
+     */public ResponseEntity<ResponseDTO> deleteBoyForAge(byte age) throws ListaSeException {
         // se llama el metodo eliminar niño y se le envia un parametro que es identificacion
         listBoys.deleteForAge(age);
         // respuesta satisfactoria con el sistema
         return new ResponseEntity<>(new ResponseDTO("Eliminado", true, null), HttpStatus.OK);
     }
+
+    /**
+     *calse de respuesta que me devuelve una exepcion ó
+     * me devuelve una respuesta acertiva con el sistema y me eliminar los niños y llama el metodo eliminar los niños por genero
+     * @return una respuesta
+     * @throws ListaSeException
+     */
     public ResponseEntity<ResponseDTO> deleteBoyForGender(String gender) throws ListaSeException {
-        // se llama el metodo eliminar niño y se le envia un parametro que es identificacion
+        // se llama el metodo eliminar niño y se le envia un genero
         listBoys.deleteForGender(gender);
         // respuesta satisfactoria con el sistema
         return new ResponseEntity<>(new ResponseDTO("Eliminado", true, null), HttpStatus.OK);
     }
+    /**
+     *calse de respuesta que me devuelve una exepcion ó
+     * me devuelve una respuesta acertiva con el sistema y me eliminar los niños y llama el metodo eliminar los niños por poscicion
+     * @return una respuesta
+     * @throws ListaSeException
+     */
     public ResponseEntity<ResponseDTO> deleteBoyByPos(int pos) throws ListaSeException {
-        // se llama el metodo adicionar por poscion
+        // se llama el metodo eliminar por posicion
         listBoys.deleteToPosition(pos);
         // respuesta satisfactoria con el sistema
         return new ResponseEntity<>(new ResponseDTO("Niño eliminado", true, null), HttpStatus.OK);
     }
+    /**
+     *calse de respuesta que me devuelve una exepcion ó
+     * me devuelve una respuesta acertiva con el sistema y me lista los niños y llama el metodo listar los niños por grado
+     * @return una respuesta
+     * @throws ListaSeException
+     */
     public ResponseEntity<ResponseDTO> listForGrade(byte grade) throws ListaSeException
     {
+        // se llama el metodo de listar por grados
         listBoys.listForGrade(grade);
+        // respuesta satisfacoria con el sistema
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio",listBoys.getHead(), null), HttpStatus.OK);
+    }
+    ////
+    public ResponseEntity<ResponseDTO> locationMax()
+    {
+        List<BoysByLocation> boysByLocations = new ArrayList<>();
+        int maxLocation=0;
+        for(Location loc:locations)
+        {
+            int count = listBoys.getCountByLocation(loc.getCode());
+            if(count> maxLocation){
+                maxLocation=count;
+                boysByLocations.clear();
+                boysByLocations.add(new BoysByLocation(loc,maxLocation));
+            }
+            else {
+                if (count == maxLocation) {
+                    boysByLocations.add(new BoysByLocation(loc, maxLocation));
+                }
+            }
+        }
+        return new ResponseEntity<>(new ResponseDTO("Satisfactorio",boysByLocations,null), HttpStatus.OK);
+    }
+    public ResponseEntity<ResponseDTO> getBoysByGender(String gender)
+    {
+
+        return new ResponseEntity<>(new ResponseDTO("Satisfactorio",listBoys.getCountBoysByGender(gender),null), HttpStatus.OK);
     }
 }

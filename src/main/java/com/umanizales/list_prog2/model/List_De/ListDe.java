@@ -450,4 +450,295 @@ public class ListDe {
         }
 
     }
+    /**
+     *metodo que me permite listar los niños por edad y por municipio ingresad
+     * @param age
+     * @param municipio
+     * @throws ListaSeException
+     */
+    public void listForAgeAndMuDe(int age, String municipio) throws ListaSeException{
+        // List<Boy>
+        // se valida si hay datos en el sistema
+        valdateListeEmptyDe();
+        // se pregunta si la cabeza esta vacia
+        if(this.head!= null){
+            // se crea una lista temporal donde se van a ingresar los niños
+            ListDe listAge= new ListDe();
+            // se crea un ayudante que se pare en la cabeza y nos ayude a recorrer la lista
+            Node temp = this.head;
+            //List<Boy> listAge =
+            // se recorre toda la lista hasta llegar al ultimo
+            while (temp!=null){
+                /**
+                 * se pregunta si la edad del niño actual tiene una edad menor o ifual a la edad ingresada
+                 * y se pregunta si la locacion ingresada es ifual a la del niño actual
+                 */
+                if(temp.getData().getAge()<=age && temp.getData().getLocation().getDescription().equals(municipio)){
+                    // si cumple con los requisitos se adiciona a la lista
+                    listAge.addToStartDe(temp.getData());
+                }
+                // se le da paso al siguiente niño
+                temp=temp.getNext();
+            }
+            // se asigna la nueva lista como la cabeza
+            this.head=listAge.getHead();
+
+        }
+        //this.head=listAge.g
+        //return listAge;
+    }
+
+    /**
+     * metodo que me lista por edad y por genero, segun la edad ingresada y genero ingresado
+     * @param age
+     * @param gender
+     * @throws ListaSeException
+     */
+    public void listForAgeAndGenderDe(int age, String gender) throws ListaSeException
+    {
+        // se valida si hay datos en la lista
+        valdateListeEmptyDe();
+        // si  hay datos en la cabeza
+        if (this.head != null) {
+            // se crea una lista temporal
+            ListDe listTemp = new ListDe();
+            // se crea un ayudante que me ayude a recorrer la lista
+            Node temp = this.head;
+            // se recorre la lista hasta encontrar el ultimod dato
+            while(temp != null)
+            {
+                // se pregunta si la edad ed menor a la edad ingresada y  a su vez que el genero coincida con el de la lista
+                if(temp.getData().getAge()<=age && temp.getData().getTypeSex().equals(gender)){
+                    // si cumple las condiciones anteriores  se agrega a la lista
+                    listTemp.addToStartDe(temp.getData());
+                }
+                // si no se cumple lo anterior
+                else {
+                    // se adiciona al final de la lista
+                    listTemp.add(temp.getData());
+                }
+                // se le da paso al siguiente nodo
+                temp = temp.getNext();
+            }
+            // se le asigna como nueva cabeza a la cabeza de  la lista nueva
+            this.head = listTemp.getHead();
+        }
+    }
+
+    /**
+     * metodo que me permite eliminar de la lista a quienes cumplan la edad
+     * @param age
+     * @throws ListaSeException
+     */
+    public void deleteForAgeDe(byte age) throws ListaSeException{
+        // se valida si hay datos en la lista
+        valdateListeEmptyDe();
+        // se crea un ayudante que se pare en la cabeza y me ayude a recorrer la lista
+        Node temp = this.head;
+        // se recorre el ciclo hasta llegar al ultimo
+        while(temp!=null){
+            // se pregunta si el dato actual tiene edad inferior a la edad ingresada
+            if(temp.getData().getAge()>age){
+                // si ingresa aqui es porque cumple las condiciones y se llama el metodo eliminar y se le manda la identificacion
+                // para que este lo elimine
+                deleteBoyDe(temp.getData().getIdentification());
+            }
+            // se le da paso al siguiente nodo
+            temp=temp.getNext();
+        }
+    }
+
+    /**
+     * metodo que me permite eliminar de la lista por genero
+     * @param gender
+     * @throws ListaSeException
+     */
+    public void deleteForGenderDe(String gender) throws ListaSeException{
+        // se valida si hay datos en la lista
+        valdateListeEmptyDe();
+        // se crea un nodo que se pare en la cabeza y me ayude a recorrer la lista
+        Node temp = this.head;
+        // se recorre el ciclo hasta el ultimo dato
+        while(temp!=null){
+            // se pregunta si el genero del dato acutal es igual al genero
+            if(temp.getData().getTypeSex().equals(gender)){
+                // si ingresa aqui es porque cumple las condiciones y se llama el metodo eliminar y se le manda la identificacion
+                // para que este lo elimine
+                deleteBoyDe(temp.getData().getIdentification());
+            }
+            // se le da paso al siguiente niño
+            temp=temp.getNext();
+        }
+    }
+
+    /**
+     * metodo que me permite determinar el niño yh la niña  con la edad mayor
+     * @return
+     * @throws ListaSeException
+     */
+    public List<Boy> boyAndChildrenHigherDe()throws ListaSeException{
+        // se valida si hay datis
+        valdateListeEmptyDe();
+        // se crea un ayudante que me ayude a recorrer la lista
+        Node temp=this.head;
+        List<Boy> listForHigher = new ArrayList<>();
+        // crea un ayudante para que la edad empiece en =0;
+        //Boy girlMax = new Boy();
+        while(temp!= null){
+            if(temp.getData().getTypeSex().equals("F") ){
+                //pregunta si la edaddel ayudante es mayor al contador
+                // se almacena los datos del niño en el ayudante
+                if(temp.getNext()==null){
+                    // listForHigher.add();//agrega a la lista a
+                }
+            }
+            if(temp.getData().getTypeSex().equals("M")){
+                //pregunta si la edad es mayor al contador
+                // se almacena los datos del niño en el ayudante
+
+            }
+            // se da paso al siguiente dato
+            temp=temp.getNext();
+        }
+        // se retorna la lista
+        return listForHigher;
+
+    }
+
+    /**
+     * metodo que me elimina un niñon dada una posicion
+     * @param pos
+     * @throws ListaSeException
+     */
+    public void deleteToPositionDe(int pos) throws ListaSeException {
+
+        /**
+         * se pregunta si la validacion es mayor a la cantidad de niño
+         * si ingresa a este es porque la posicion es valida
+         * y se procede a eliminar el niño
+         */
+        if (pos > count) {
+            //this.add(boy);
+            //return;
+            throw new ListaSeException("LA posicion ingresada no es valida");
+        }
+        /**
+         * se pregunta a la que quieren ingresar al niño es la primer
+         * y se llama el metodo que lo agrega al principio
+         */
+        if (pos == 1) {
+            // si la posicion a eliminar es 1, se le dice que la nueva cabeza es el que tenia agarrado
+            this.head = head.getNext();
+        } else {
+            /**
+             *se crea un contador que inicializa en 1
+             * se crea un ayudante que se pare en la cabeza y nos ayude a recorrer todo el listado
+             * se empieza a recorrer todo el ciclo hasta llegar al ultimo
+             */
+            int cont = 1;
+            Node temp = this.head;
+            while (temp != null) {
+                // se pregunta si el contador es igual a la posicion menos 1
+                if (cont == pos - 1) {
+                    // se hace un alto
+                    // se llama el metodo eliminar al dato actual
+                    deleteBoyDe(temp.getData().getIdentification());
+                    break;
+                }
+                //se le da paso al siguiente nodo
+                temp = temp.getNext();
+                // se aumenta el contador
+                cont--;
+            }
+            /**
+             * se crea un nuevo nodo para agregar al niño
+             * se le dice al brazo que agarre al anteror del ultimo
+             * se le dice al brazo del ultimo que agarre al nuevo
+             */
+            //deleteBoy(temp.getData().getIdentification());
+        }
+
+    }
+
+    /**
+     * metodo que me permite listar por grado
+     * @param grade
+     * @throws ListaSeException
+     */
+    public void listForGradeDe(byte grade) throws ListaSeException{
+        // se valida si hay datos en la lista
+        valdateListeEmptyDe();
+        // se pregunta si la cabeza es diferente de vacio
+        if (this.head != null) {
+            // se crea una lista temporal donde vamos a almacenar los datos
+            ListDe listTemp = new ListDe();
+            // se crea un ayudante que me ayude arecorrer la lista
+            Node temp = this.head;
+            // se recorre la lista hasta llegar al ultimo
+            while(temp != null)
+            {
+                // se pregunta si el dato actual tiene el mismo grado al grado ingresado
+                if (temp.getData().getGrade()==grade){
+                    // se adiciona a la lista
+                    listTemp.addToStartDe(temp.getData());
+                }
+                // se le da paso al sigueinte niño
+                temp = temp.getNext();
+            }
+            // se asigna como cabeza ala cabeza de la nueva lista
+            this.head = listTemp.getHead();
+        }
+    }
+    public void orderBoysAgeDe()throws ListaSeException {
+        //validamos si hay datos en la lista
+
+        valdateListeEmptyDe();
+        // creamos un ayudante que se pare en la cabeza
+        Node temp = this.head;
+
+        // se recorre todo el ciclo hasta llegar al ultimo
+
+        while(temp.getNext() != null) {
+            // preguntamos si la edad del niño actual es mayor a la edad del que tiene en el brazo
+
+            if(temp.getData().getAge()>temp.getNext().getData().getAge()){
+                // se crea un dato ayudante
+                Boy boy = temp.getData();
+                // borramos al niño que tenia el ayudante
+                deleteBoyDe(temp.getData().getIdentification());
+                // adicionamos al niño al final
+                add(boy);
+                //le decimos al ayudante que se pare de nuevo en la cabeza
+                temp =this.head;
+            }
+
+            else{
+                // le damos paso al siguiente niño
+                temp = temp.getNext();
+            }
+        }
+    }
+    public int getCountBoysByGenderDe(String gender)
+    {
+        // creamos un ayudante que se pare en la cabeza
+        Node temp = this.getHead();
+        // empezamos el contador de el genero en cero
+        int count = 0;
+        // recorremos el ciclo hasta llegar al ultimo
+        while (temp!=null)
+        {
+            // se pregunta si ael dato del niño actual(genero) es igual al genero pedido
+            if(temp.getData().getTypeSex().equals(gender))
+            {
+                // se aumenta el contador
+                count++;
+            }
+            // se da paso al siguiente termino
+            temp=temp.getNext();
+        }
+        // se retorna el contadir
+        return count;
+    }
+
+
 }

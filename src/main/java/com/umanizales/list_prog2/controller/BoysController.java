@@ -216,7 +216,7 @@ public class BoysController {
     public ResponseEntity<ResponseDTO> boysbylocation() {
         return listeSeService.getBoyByLocation();
     }
-
+//////////////////////////////////////////////
     /**
      * metodo que me permite decirle al usuario los niños que hay igual a la edad  y el municipio que se ha ingresado
      * @param age el parametro es la edad del niño  que se desea verificar
@@ -229,27 +229,64 @@ public class BoysController {
     public ResponseEntity<ResponseDTO> listForAgeAndMu(@PathVariable int age, @PathVariable String municipio) throws ListaSeException {
         return listeSeService.listForAgeAndMu(age, municipio);
     }
+
+    /**
+     * metodo para listar por edad y por genero
+     * @param age
+     * @param gender
+     * @return un listado con los niños y con el genero con los parametros ya establecidos
+     * @throws ListaSeException
+     */
     @GetMapping(path = "/listforageandgender/{age}/{gender}")
     public ResponseEntity<ResponseDTO> listForAgeAndGender(@PathVariable int age, @PathVariable String gender) throws ListaSeException
     { return listeSeService.listForAgeAndGender(age,gender);
     }
+
+    /**
+     * metodo para eliminar niños por edad segun una edad registrada en el sistema
+     * @param age
+     * @return el listado sin los niños eliminados
+     * @throws ListaSeException
+     */
     @GetMapping(path = "/deleteboyforage/{age}")
     public ResponseEntity<ResponseDTO> deleteBoyForAge(@PathVariable byte age) throws ListaSeException {
         return listeSeService.deleteBoyForAge(age);
     }
+
+    /**
+     * metodo que me elimina los niños con el genero recibido en el parametro
+     * @param gender
+     * @return se retorna la lista sin los niños con el genero enviado
+     * @throws ListaSeException
+     */
     @GetMapping(path = "/deleteboyforgender/{gender}")
     public ResponseEntity<ResponseDTO> deleteBoyForGender(@PathVariable String gender) throws ListaSeException {
         return listeSeService.deleteBoyForGender(gender);
     }
+
+    /**
+     * metodo que me permite eliminar por posicion dada en el sistema
+     * @param pos
+     * @return se retorna la lista sin el niño de la posicion eliminada
+     * @throws ListaSeException
+     */
     @GetMapping(path = "/deletetopositon/{pos}")
     public ResponseEntity<ResponseDTO> deleteBoyToPosition(@PathVariable int pos) throws ListaSeException {
         return listeSeService.deleteBoyByPos(pos);
     }
+
+    /**
+     * metodo que me permite listar los niños por grado
+     * @param grade
+     * @return se retorna la lista con los niños que esten en ese grado
+     * @throws ListaSeException
+     */
     @GetMapping(path = "/listforgrade/{grade}")
     public ResponseEntity<ResponseDTO> listForGrade(@PathVariable byte grade) throws ListaSeException {
         return listeSeService.listForGrade(grade);
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Dobelemente enlazadas//
     /**
      *
      * @param boy se solicita el parametro con los dats del niños ademas  donde validan los mismos
@@ -352,4 +389,80 @@ public class BoysController {
     public ResponseEntity<ResponseDTO> variantListDe() throws ListaSeException {
         return listDeServiceDe.variantListDe();
     }
+    ///
+    /**
+     * metodo que me permite decirle al usuario los niños que hay igual a la edad  y el municipio que se ha ingresado
+     * @param age el parametro es la edad del niño  que se desea verificar
+     * @param municipio el parametro es el muniipio del niño que se desea verificar
+     * @returnse retorna el listado que cumple las condiciones del proceso
+     * @throws ListaSeException esta es la excepcion que puede lanzar
+     *      *      *      * y le esta haciendo pasarela para que el no sea el que grite la excepcion
+     */
+    @GetMapping(path = "/listforageandmude/{age}/{municipio}")
+    public ResponseEntity<ResponseDTO> listForAgeAndMuDe(@PathVariable int age, @PathVariable String municipio) throws ListaSeException {
+        //return listDeServiceDe.listForAgeAndMuDe(age, municipio);
+        return listDeServiceDe.listForAgeAndGenderDe(age,municipio);
+    }
+
+    /**
+     * metodo para listar por edad y por genero
+     * @param age
+     * @param gender
+     * @return un listado con los niños y con el genero con los parametros ya establecidos
+     * @throws ListaSeException
+     */
+    @GetMapping(path = "/listforageandgenderde/{age}/{gender}")
+    public ResponseEntity<ResponseDTO> listForAgeAndGenderDe(@PathVariable int age, @PathVariable String gender) throws ListaSeException
+    { return listDeServiceDe.listForAgeAndGenderDe(age,gender);
+    }
+
+    /**
+     * metodo para eliminar niños por edad segun una edad registrada en el sistema
+     * @param age
+     * @return el listado sin los niños eliminados
+     * @throws ListaSeException
+     */
+    @GetMapping(path = "/deleteboyforage/{age}")
+    public ResponseEntity<ResponseDTO> deleteBoyForAgeDe(@PathVariable byte age) throws ListaSeException {
+        return listDeServiceDe.deleteBoyForAgeDe(age);
+    }
+
+    /**
+     * metodo que me elimina los niños con el genero recibido en el parametro
+     * @param gender
+     * @return se retorna la lista sin los niños con el genero enviado
+     * @throws ListaSeException
+     */
+    @GetMapping(path = "/deleteboyforgenderde/{gender}")
+    public ResponseEntity<ResponseDTO> deleteBoyForGenderDe(@PathVariable String gender) throws ListaSeException {
+        return listDeServiceDe.deleteBoyForGenderDe(gender);
+    }
+
+    /**
+     * metodo que me permite eliminar por posicion dada en el sistema
+     * @param pos
+     * @return se retorna la lista sin el niño de la posicion eliminada
+     * @throws ListaSeException
+     */
+    @GetMapping(path = "/deletetopositoden/{pos}")
+    public ResponseEntity<ResponseDTO> deleteBoyToPositionDe(@PathVariable int pos) throws ListaSeException {
+        return listDeServiceDe.deleteBoyByPosDe(pos);
+    }
+
+    /**
+     * metodo que me permite listar los niños por grado
+     * @param grade
+     * @return se retorna la lista con los niños que esten en ese grado
+     * @throws ListaSeException
+     */
+    @GetMapping(path = "/listforgradede/{grade}")
+    public ResponseEntity<ResponseDTO> listForGradeDe(@PathVariable byte grade) throws ListaSeException {
+        // respuesta con el sistema
+        return listDeServiceDe.listForGradeDe(grade);
+    }
+    @GetMapping(path = "locationmax")
+    public ResponseEntity<ResponseDTO> locationMax(){return listeSeService.locationMax();}
+    /*@GetMapping(path = "boysbygender/{gender}")
+    public ResponseEntity<ResponseDTO> boysByGender()
+    {return listeSeService.getBoysByGender(gender);}*/
 }

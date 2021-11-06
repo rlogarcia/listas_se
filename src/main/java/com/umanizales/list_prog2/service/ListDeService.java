@@ -187,4 +187,73 @@ public class ListDeService {
         // respuesta satisfacotria con el sistema
         return new ResponseEntity<>(new ResponseDTO("satisfactorio", listBoys.getHead(), null), HttpStatus.OK);
     }
+
+    /**
+     *calse de respuesta que me devuelve una exepcion ó
+     * me devuelve una respuesta acertiva con el sistema y me lista los niños y llama el metodo lista los niños poredad y genero
+     * @return una respuesta
+     * @throws ListaSeException
+     */
+    public ResponseEntity<ResponseDTO> listForAgeAndGenderDe(int age, String gender) throws ListaSeException
+    {
+        // se llama al metodo de listar por edad y genero
+        listBoys.listForAgeAndGenderDe(age,gender);
+        // se tuvo respuesta del sistema
+        return new ResponseEntity<>(new ResponseDTO("Satisfactorio",listBoys.getHead(), null), HttpStatus.OK);
+    }
+
+    /**
+     *calse de respuesta que me devuelve una exepcion ó
+     * me devuelve una respuesta acertiva con el sistema y me elimina los niños y llama el metodo eliminar  los niños poreda
+     * @return una respuesta
+     * @throws ListaSeException
+     */public ResponseEntity<ResponseDTO> deleteBoyForAgeDe(byte age) throws ListaSeException {
+        // se llama el metodo eliminar niño y se le envia un parametro que es identificacion
+        listBoys.deleteForAgeDe(age);
+        // respuesta satisfactoria con el sistema
+        return new ResponseEntity<>(new ResponseDTO("Eliminado", true, null), HttpStatus.OK);
+    }
+
+    /**
+     *calse de respuesta que me devuelve una exepcion ó
+     * me devuelve una respuesta acertiva con el sistema y me eliminar los niños y llama el metodo eliminar los niños por genero
+     * @return una respuesta
+     * @throws ListaSeException
+     */
+    public ResponseEntity<ResponseDTO> deleteBoyForGenderDe(String gender) throws ListaSeException {
+        // se llama el metodo eliminar niño y se le envia un genero
+        listBoys.deleteForGenderDe(gender);
+        // respuesta satisfactoria con el sistema
+        return new ResponseEntity<>(new ResponseDTO("Eliminado", true, null), HttpStatus.OK);
+    }
+    /**
+     *calse de respuesta que me devuelve una exepcion ó
+     * me devuelve una respuesta acertiva con el sistema y me eliminar los niños y llama el metodo eliminar los niños por poscicion
+     * @return una respuesta
+     * @throws ListaSeException
+     */
+    public ResponseEntity<ResponseDTO> deleteBoyByPosDe(int pos) throws ListaSeException {
+        // se llama el metodo eliminar por posicion
+        listBoys.deleteToPositionDe(pos);
+        // respuesta satisfactoria con el sistema
+        return new ResponseEntity<>(new ResponseDTO("Niño eliminado", true, null), HttpStatus.OK);
+    }
+    /**
+     *calse de respuesta que me devuelve una exepcion ó
+     * me devuelve una respuesta acertiva con el sistema y me lista los niños y llama el metodo listar los niños por grado
+     * @return una respuesta
+     * @throws ListaSeException
+     */
+    public ResponseEntity<ResponseDTO> listForGradeDe(byte grade) throws ListaSeException
+    {
+        // se llama el metodo de listar por grados
+        listBoys.listForGradeDe(grade);
+        // respuesta satisfacoria con el sistema
+        return new ResponseEntity<>(new ResponseDTO("Satisfactorio",listBoys.getHead(), null), HttpStatus.OK);
+    }
+   /* public ResponseEntity<ResponseDTO> getBoysByGenderDe(String gender)
+    {
+
+        return new ResponseEntity<>(new ResponseDTO("Satisfactorio",listBoys.getCountBoysByGenderDe(gender), HttpStatus.OK);
+    }*/
 }
