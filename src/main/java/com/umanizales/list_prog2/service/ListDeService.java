@@ -1,11 +1,11 @@
 package com.umanizales.list_prog2.service;
 
+import com.umanizales.list_prog2.controller.dto.GradesByLocationDTO;
 import com.umanizales.list_prog2.controller.dto.ResponseDTO;
 import com.umanizales.list_prog2.exception.ListaSeException;
-import com.umanizales.list_prog2.model.Boy;
-import com.umanizales.list_prog2.model.BoysByLocation;
+import com.umanizales.list_prog2.model.*;
 import com.umanizales.list_prog2.model.List_Se.ListSE;
-import com.umanizales.list_prog2.model.Location;
+import com.umanizales.list_prog2.model.List_Se.Node;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -256,4 +256,29 @@ public class ListDeService {
 
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio",listBoys.getCountBoysByGenderDe(gender), HttpStatus.OK);
     }*/
+/*
+   public ResponseEntity<ResponseDTO> getBoysByGenderDe()
+   {
+       List<BoysByGender> boysByGenders = new ArrayList<>();
+
+       int count = listBoys.getCountBoysByOrphanGenderDe(Gender.MASCULINO);
+       boysByGenders.add(new BoysByGender(Gender.MASCULINO,count));
+
+       int count1 = listBoys.getCountBoysByOrphanGenderDe(Gender.FEMENINO);
+       boysByGenders.add(new BoysByGender(Gender.FEMENINO,count1));
+
+       return new ResponseEntity<>(new ResponseDTO("Satisfactorio",boysByGenders,null), HttpStatus.OK);
+   }*/
+    public ResponseEntity<ResponseDTO>  getOrphansByGradeByLocation() throws ListaSeException
+    {
+        List<GradesByLocationDTO> gradeByLocationDTOS = new ArrayList<>();
+        for (Location loc: locations)
+        {
+            gradeByLocationDTOS.add(listBoys.getGradesByLocacion(loc));
+        }
+
+        return new ResponseEntity<>(new ResponseDTO("Satisfactorio", gradeByLocationDTOS, null), HttpStatus.OK);
+    }
+
+
 }

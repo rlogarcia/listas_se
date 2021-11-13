@@ -27,7 +27,7 @@ public class Boy {
     @Positive
     private byte age;
     @NotNull
-    private String typeSex;
+    private Gender typeSex;
     @Valid
     @NotNull
     private Location location;
@@ -35,6 +35,6 @@ public class Boy {
     @Positive
     //@Size(min=1,max=5)
     private byte grade;
-
-
+    @NotNull
+    private boolean orphan;
 }

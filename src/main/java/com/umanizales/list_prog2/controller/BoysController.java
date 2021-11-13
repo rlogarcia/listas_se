@@ -3,6 +3,7 @@ package com.umanizales.list_prog2.controller;
 import com.umanizales.list_prog2.controller.dto.ResponseDTO;
 import com.umanizales.list_prog2.exception.ListaSeException;
 import com.umanizales.list_prog2.model.Boy;
+import com.umanizales.list_prog2.model.Gender;
 import com.umanizales.list_prog2.service.ListDeService;
 import com.umanizales.list_prog2.service.ListeSeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -422,7 +423,7 @@ public class BoysController {
      * @return el listado sin los niños eliminados
      * @throws ListaSeException
      */
-    @GetMapping(path = "/deleteboyforage/{age}")
+    @GetMapping(path = "/deleteboyforagede/{age}")
     public ResponseEntity<ResponseDTO> deleteBoyForAgeDe(@PathVariable byte age) throws ListaSeException {
         return listDeServiceDe.deleteBoyForAgeDe(age);
     }
@@ -462,7 +463,15 @@ public class BoysController {
     }
     @GetMapping(path = "locationmax")
     public ResponseEntity<ResponseDTO> locationMax(){return listeSeService.locationMax();}
-    /*@GetMapping(path = "boysbygender/{gender}")
+
+    @GetMapping(path = "boysbygender")
     public ResponseEntity<ResponseDTO> boysByGender()
-    {return listeSeService.getBoysByGender(gender);}*/
+    {return listeSeService.getBoysByGender();}
+
+    /*@GetMapping(path = "boysbygenderde")
+    public ResponseEntity<ResponseDTO> boysByGenderOrphan()
+    {return listDeServiceDe.getBoysByGenderDe();}*/
+    @GetMapping(path = "boysbygenderorphande")
+    public ResponseEntity<ResponseDTO> boysByGenderorphanDe() throws ListaSeException
+    {return listDeServiceDe.getOrphansByGradeByLocation();}
 }

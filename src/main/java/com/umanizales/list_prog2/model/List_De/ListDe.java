@@ -1,9 +1,14 @@
 package com.umanizales.list_prog2.model.List_De;
 
+import com.umanizales.list_prog2.controller.dto.CountGenderDTO;
+import com.umanizales.list_prog2.controller.dto.GendersByGradeDTO;
+import com.umanizales.list_prog2.controller.dto.GradesByLocationDTO;
 import com.umanizales.list_prog2.exception.ListaSeException;
 import com.umanizales.list_prog2.model.Boy;
 
+import com.umanizales.list_prog2.model.Gender;
 import com.umanizales.list_prog2.model.List_Se.ListSE;
+import com.umanizales.list_prog2.model.Location;
 import lombok.Data;
 
 
@@ -738,6 +743,94 @@ public class ListDe {
         }
         // se retorna el contadir
         return count;
+    }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * metodo para conrar los niños por locacion y por grado
+     * @param location
+     * @param grade
+     * @return el valor del contador
+     * @throws ListaSeException
+     */
+    public int countByLocationAndGrade(String location, byte grade) throws ListaSeException{
+        // se valida si hay datos en la lista
+        valdateListeEmptyDe();
+        // se crea un ayudante  para que me ayude a recorrer la lista
+        Node temp= this.getHead();
+        // se crea un contador que empiece en cero
+        int count=0;
+        // se recorre el ciclo hasta el ultimo dato
+        while(temp!=null){
+            if(temp.getData().getLocation().getDescription().equals(location) && temp.getData().getGrade()==grade && temp.getData().isOrphan()){
+                count++;
+            }
+            temp=temp.getNext();
+        }
+        return count;
+    }
+    /*public List<CountGenderDTO> getBoysorphantByLocations(){
+        return null;
+    }*/
+    /*
+    public int getCountBoysByOrphanGenderDe(Gender gender)
+    {
+        // creamos un ayudante que se pare en la cabeza
+        Node temp = this.getHead();
+        // empezamos el contador de el genero en cero
+        int count = 0;
+        // recorremos el ciclo hasta llegar al ultimo
+        while (temp!=null)
+        {
+            // se pregunta si ael dato del niño actual(genero) es igual al genero pedido
+            if(temp.getData().getTypeSex().equals(gender) && temp.getData().isOrphan())
+            {
+                // se aumenta el contador
+                count++;
+            }
+            // se da paso al siguiente termino
+            temp=temp.getNext();
+        }
+        // se retorna el contadir
+        return count;
+    }*/
+    public GendersByGradeDTO listForGradeAndGenderDe(byte grade, Location location) throws ListaSeException {
+        valdateListeEmptyDe();
+        List<CountGenderDTO> countByGenderDTOS = new ArrayList<>();
+        Node temp = this.head;
+        int count = 0;
+        int countF = 0;
+        int countM = 0;
+
+        while (temp != null) {
+            if (temp.getData().getLocation().getCode().equals(location) && temp.getData().getGrade() == grade) {
+                count++;
+                if (temp.getData().isOrphan()) {
+                    if (temp.getData().getTypeSex().equals(Gender.MASCULINO)) {
+                        countM++;
+                    } else {
+                        countF++;
+                    }
+                }
+            }
+            temp = temp.getNext();
+        }
+        countByGenderDTOS.add(new CountGenderDTO(Gender.MASCULINO, countM));
+        countByGenderDTOS.add(new CountGenderDTO(Gender.FEMENINO, countF));
+
+        GendersByGradeDTO genderByGradeDTO = new GendersByGradeDTO(grade, countByGenderDTOS, count);
+
+        return genderByGradeDTO;
+    }
+    public GradesByLocationDTO getGradesByLocacion(Location location) throws ListaSeException{
+        List<GendersByGradeDTO> gendersByGradeDTO = new ArrayList<>();
+        for(byte i=1; i<=5; i++){
+
+            gendersByGradeDTO.add(listForGradeAndGenderDe(i, location));
+
+        }
+        GradesByLocationDTO gradesByLocationDTO = new GradesByLocationDTO(location,gendersByGradeDTO);
+        return gradesByLocationDTO;
     }
 
 

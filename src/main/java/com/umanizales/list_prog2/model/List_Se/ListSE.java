@@ -2,7 +2,9 @@ package com.umanizales.list_prog2.model.List_Se;
 
 import com.umanizales.list_prog2.exception.ListaSeException;
 import com.umanizales.list_prog2.model.Boy;
+import com.umanizales.list_prog2.model.Gender;
 import lombok.Data;
+import org.springframework.web.servlet.mvc.method.annotation.HttpEntityMethodProcessor;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -224,7 +226,7 @@ public class ListSE {
         int cont = 0;
         if (this.head != null) {
             Node temp = this.head;
-            while (temp != null) {
+            while (temp != null && temp.getData().isOrphan()) {
                 // se aumenta el contador y se le da paso al siguiente paso
                 cont++;
                 temp = temp.getNext();
@@ -926,7 +928,7 @@ public class ListSE {
             }
         }
     }
-    public int getCountBoysByGender(String gender)
+    public int getCountBoysByGender(Gender gender)
     {
          // creamos un ayudante que se pare en la cabeza
         Node temp = this.getHead();
@@ -939,6 +941,28 @@ public class ListSE {
             if(temp.getData().getTypeSex().equals(gender))
             {
                // se aumenta el contador
+                count++;
+            }
+            // se da paso al siguiente termino
+            temp=temp.getNext();
+        }
+        // se retorna el contadir
+        return count;
+    }
+
+    public int getCountBoysByOrphanGender(Gender gender)
+    {
+        // creamos un ayudante que se pare en la cabeza
+        Node temp = this.getHead();
+        // empezamos el contador de el genero en cero
+        int count = 0;
+        // recorremos el ciclo hasta llegar al ultimo
+        while (temp!=null)
+        {
+            // se pregunta si ael dato del niño actual(genero) es igual al genero pedido
+            if(temp.getData().getTypeSex().equals(gender) && temp.getData().isOrphan())
+            {
+                // se aumenta el contador
                 count++;
             }
             // se da paso al siguiente termino

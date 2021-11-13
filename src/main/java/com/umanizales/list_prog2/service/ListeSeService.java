@@ -1,11 +1,10 @@
 package com.umanizales.list_prog2.service;
 
+import com.umanizales.list_prog2.controller.dto.GradesByLocationDTO;
 import com.umanizales.list_prog2.controller.dto.ResponseDTO;
 import com.umanizales.list_prog2.exception.ListaSeException;
-import com.umanizales.list_prog2.model.Boy;
-import com.umanizales.list_prog2.model.BoysByLocation;
+import com.umanizales.list_prog2.model.*;
 import com.umanizales.list_prog2.model.List_Se.ListSE;
-import com.umanizales.list_prog2.model.Location;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -275,16 +274,18 @@ public class ListeSeService {
     }
     //  // listBoys.listForAgeAndMu(age,municipio)
 
-   /* public ResponseEntity<ResponseDTO> getBoysByGender()
+   public ResponseEntity<ResponseDTO> getBoysByGender()
     {
         List<BoysByGender> boysByGenders = new ArrayList<>();
-        for(Gender1 gender:genders)
-        {
-            int count = listBoys.getCountBoysByGender(gender.getCode());
-            boysByGenders.add(new BoysByGender(gender,count));
-        }
+
+            int count = listBoys.getCountBoysByGender(Gender.MASCULINO);
+            boysByGenders.add(new BoysByGender(Gender.MASCULINO,count));
+
+            int count1 = listBoys.getCountBoysByGender(Gender.FEMENINO);
+            boysByGenders.add(new BoysByGender(Gender.FEMENINO,count1));
+
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio",boysByGenders,null), HttpStatus.OK);
-    }*/
+    }
 
     /**
      *calse de respuesta que me devuelve una exepcion ó
@@ -370,9 +371,16 @@ public class ListeSeService {
         }
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio",boysByLocations,null), HttpStatus.OK);
     }
-    public ResponseEntity<ResponseDTO> getBoysByGender(String gender)
+   /* public ResponseEntity<ResponseDTO> getBoysByGender(Gender gender)
     {
 
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio",listBoys.getCountBoysByGender(gender),null), HttpStatus.OK);
+    }*/
+
+    public ResponseEntity<ResponseDTO> getOrphansByGradesByLocation()
+    {
+        List<GradesByLocationDTO> gradesByLocationDTOS = new ArrayList<>();
+
+        return new ResponseEntity<>(new ResponseDTO("Satisfactorio",gradesByLocationDTOS,null), HttpStatus.OK);
     }
 }
