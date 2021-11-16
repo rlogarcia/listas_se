@@ -928,6 +928,7 @@ public class ListDe {
             if(listLoc.getHead()!=null){
                 listTemp.addNode(listLoc.getHead());
             }
+
     }*/
 }
 
