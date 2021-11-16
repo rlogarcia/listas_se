@@ -1,8 +1,6 @@
 package com.umanizales.list_prog2.model.List_De;
 
-import com.umanizales.list_prog2.controller.dto.CountGenderDTO;
-import com.umanizales.list_prog2.controller.dto.GendersByGradeDTO;
-import com.umanizales.list_prog2.controller.dto.GradesByLocationDTO;
+import com.umanizales.list_prog2.controller.dto.*;
 import com.umanizales.list_prog2.exception.ListaSeException;
 import com.umanizales.list_prog2.model.Boy;
 
@@ -769,10 +767,10 @@ public class ListDe {
         }
         return count;
     }
-    /*public List<CountGenderDTO> getBoysorphantByLocations(){
+    public List<CountGenderDTO> getBoysorphantByLocations(){
         return null;
-    }*/
-    /*
+    }
+
     public int getCountBoysByOrphanGenderDe(Gender gender)
     {
         // creamos un ayudante que se pare en la cabeza
@@ -793,7 +791,7 @@ public class ListDe {
         }
         // se retorna el contadir
         return count;
-    }*/
+    }
     public GendersByGradeDTO listForGradeAndGenderDe(byte grade, Location location) throws ListaSeException {
         valdateListeEmptyDe();
         List<CountGenderDTO> countByGenderDTOS = new ArrayList<>();
@@ -832,6 +830,109 @@ public class ListDe {
         GradesByLocationDTO gradesByLocationDTO = new GradesByLocationDTO(location,gendersByGradeDTO);
         return gradesByLocationDTO;
     }
+    public void listBoysForCode() throws ListaSeException{
+        // se valida si hay datos en la lista
+        valdateListeEmptyDe();
+        // se crea un ayudante que nos ayude a recorrer la lista
+        // se crea una lista en la cual vamos a agrupar los niños
+        Node temp=this.head;
+        ListDe listTemp = new ListDe();
+        // se recorre la lista hasta llegar al ultimo
+        while (temp!= null){
+            // se pregnta s el dato actual
+            if(temp.getData().getTypeSex().equals(Gender.MASCULINO)){
+                // si ingresa aqui el dato del niño se agrega al comienzo
+                listTemp.addToStartDe(temp.getData());
+            }else{
+                // si no se cumple lo anterior se agregar al niño al final
+                listTemp.add(temp.getData());
+            }
+            // se le da paso al siguiente dato
+            temp=temp.getNext();
+        }
+        // se asigna como cabeza este nuevo listado
+        this.head = listTemp.getHead();
+    }
+
+    /**
+     *metodo que me permite ahrehar un niño por nodo ingresado
+     * @param nodeInt
+     * @throws ListaSeException
+     */
+    public void addNode(Node nodeInt)throws ListaSeException {
+        // se pregunta si la cabeza esta vacia
+        // se agrega al nodo nuevo a la cabeza
+        if (this.head == null) {
+            this.head = nodeInt;
+        } else {
+            // se cre un ayudanye que se pare en la cabeza
+            // recorremos todo el ciclo hasta pararnos en el ultimo
+            Node temp = this.head;
+            while (temp.getNext() != null) {
+                temp = temp.getNext();
+
+            }
+            // se le dice al ultimo que agarre al nuevo nodo
+            // y que el nodo neuvo agarre al que esta parado el ayudando
+            temp.setNext(nodeInt);
+            nodeInt.setPrevius(temp);
+        }
+    }
+    public ListDe listDeLocacion(Location location) throws ListaSeException{
+        ListDe listTemp= new ListDe();
+        Node temp= this.head;
+        while(temp!=null){
+            if(temp.getData().getLocation().equals(location)){
+                listTemp.add(temp.getData());
+            }
+            temp =temp.getNext();
+        }
+        return listTemp;
+    }
+    public GradeAndRhDTO getGradesAndRhDto(byte grade) throws ListaSeException{
+        //GradeAndRhDTO gradeAndRhDTO= new GradeAndRhDTO(grade);
+        Node temp= this.head;
+        String rh="";
+        int count=0;
+        while(temp!=null){
+            if(temp.getData().getGrade()==grade){
+                if(rh.contains(temp.getData().getRh())){
+                    rh= rh +" , "+temp.getData().getRh();
+                }
+                count++;
+            }
+            temp=temp.getNext();
+        }
+        return  new GradeAndRhDTO(grade,rh,count);
+    }
 
 
+    public GradeByGenderDTO getGradesByGenderDTO(Gender gender)throws ListaSeException{
+        GradeAndRhDTO [] gradeAndRhDTO= new GradeAndRhDTO[5];
+        for(byte i=1; i<=5; i++){
+            gradeAndRhDTO[i]=getGradesAndRhDto((byte)(i+1));
+
+        }
+        return new GradeByGenderDTO(gender,gradeAndRhDTO);
+
+        }
+
+
+    /*
+    public GradesByLocationDTO gradesByLocationDTO() throws ListaSeException {
+        //GradesByLocationDTO gradesByLocationDTO= new GradesByLocationDTO();
+
+        ListDe listTemp= new ListDe();
+        for(Location loc:locations){
+            ListDe listLoc=this.listBoys.listDeLocacion(loc);
+            if(listLoc.getHead()!=null){
+                listTemp.addNode(listLoc.getHead());
+            }
+    }*/
 }
+
+
+
+
+
+

@@ -37,4 +37,7 @@ public class Boy {
     private byte grade;
     @NotNull
     private boolean orphan;
+    @NotNull
+    @NotEmpty
+    private String rh;
 }

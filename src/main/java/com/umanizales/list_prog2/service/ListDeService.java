@@ -5,7 +5,6 @@ import com.umanizales.list_prog2.controller.dto.ResponseDTO;
 import com.umanizales.list_prog2.exception.ListaSeException;
 import com.umanizales.list_prog2.model.*;
 import com.umanizales.list_prog2.model.List_Se.ListSE;
-import com.umanizales.list_prog2.model.List_Se.Node;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -33,6 +32,7 @@ public class ListDeService {
          *
          */
         listBoys = new ListDe();
+        inicializatedLocation();
     }
     /**
      * se tiene un metodo para crear cada una de las ciudades que vamos a tener en el metodo
@@ -251,12 +251,13 @@ public class ListDeService {
         // respuesta satisfacoria con el sistema
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio",listBoys.getHead(), null), HttpStatus.OK);
     }
-   /* public ResponseEntity<ResponseDTO> getBoysByGenderDe(String gender)
+    /*
+   public ResponseEntity<ResponseDTO> getBoysByGenderDe(String gender)
     {
 
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio",listBoys.getCountBoysByGenderDe(gender), HttpStatus.OK);
     }*/
-/*
+
    public ResponseEntity<ResponseDTO> getBoysByGenderDe()
    {
        List<BoysByGender> boysByGenders = new ArrayList<>();
@@ -268,7 +269,7 @@ public class ListDeService {
        boysByGenders.add(new BoysByGender(Gender.FEMENINO,count1));
 
        return new ResponseEntity<>(new ResponseDTO("Satisfactorio",boysByGenders,null), HttpStatus.OK);
-   }*/
+   }
     public ResponseEntity<ResponseDTO>  getOrphansByGradeByLocation() throws ListaSeException
     {
         List<GradesByLocationDTO> gradeByLocationDTOS = new ArrayList<>();
@@ -278,6 +279,24 @@ public class ListDeService {
         }
 
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio", gradeByLocationDTOS, null), HttpStatus.OK);
+    }
+
+    public ResponseEntity<ResponseDTO> listBoysForCodeDe() throws ListaSeException {
+        // se llama el metodo de listar los jiños por codigo
+        listBoys.listBoysForCode();
+        // respuesta satisfacotria con el sistema
+        return new ResponseEntity<>(new ResponseDTO("satisfactorio", listBoys.getHead(), null), HttpStatus.OK);
+    }
+    public ResponseEntity<ResponseDTO> listDeLocacion() throws ListaSeException {
+        ListDe listTemp= new ListDe();
+        for(Location loc:locations){
+            ListDe listLoc=this.listBoys.listDeLocacion(loc);
+            if(listLoc.getHead()!=null){
+                listTemp.addNode(listLoc.getHead());
+            }
+        }
+
+        return new ResponseEntity<>(new ResponseDTO("satisfactorio", listTemp.listDe(), null), HttpStatus.OK);
     }
 
 

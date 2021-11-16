@@ -468,10 +468,19 @@ public class BoysController {
     public ResponseEntity<ResponseDTO> boysByGender()
     {return listeSeService.getBoysByGender();}
 
-    /*@GetMapping(path = "boysbygenderde")
+    @GetMapping(path = "boysbygenderde")
     public ResponseEntity<ResponseDTO> boysByGenderOrphan()
-    {return listDeServiceDe.getBoysByGenderDe();}*/
+    {return listDeServiceDe.getBoysByGenderDe();}
     @GetMapping(path = "boysbygenderorphande")
     public ResponseEntity<ResponseDTO> boysByGenderorphanDe() throws ListaSeException
     {return listDeServiceDe.getOrphansByGradeByLocation();}
+    @GetMapping(path = "/listboysforcode")
+    public ResponseEntity<ResponseDTO> listBoysForCodeDe() throws ListaSeException {
+        return listDeServiceDe.listBoysForCodeDe();
+    }
+    @GetMapping(path = "/listdelocation")
+    public ResponseEntity<ResponseDTO> listDeLocacion() throws ListaSeException {
+        return listDeServiceDe.listDeLocacion();
+    }
+
 }
